@@ -1,9 +1,30 @@
 import React from 'react';
+import AddProductModal from './components/AddProductModal.js';
+import {
+   EuiFlexGroup,
+   EuiFlexItem,
+   EuiPanel,EuiSpacer
+  } from '@elastic/eui';
+  import '@elastic/eui/dist/eui_theme_light.css';
+import Products from './components/Products.js';
 
 
 const App = () =>{
     return(
-        <div>Hi I am App and I i will be building a product page</div>
+        <>
+        <EuiFlexGroup gutterSize='m'>
+            <EuiFlexItem>
+                <EuiPanel>
+                <AddProductModal />
+
+                </EuiPanel>
+                <EuiSpacer />
+                <EuiPanel>
+                    <Products />
+                </EuiPanel>
+            </EuiFlexItem>
+        </EuiFlexGroup>
+        </>
     )
 }
 
