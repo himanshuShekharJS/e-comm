@@ -18,7 +18,6 @@ import Search from "./components/Search.js";
 const App = () => {
   const [currentID, setCurrentID] = useState(null);
   const dispatch = useDispatch();
-  console.log("inside the APP.JS--->CurrentID---->", currentID);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -29,30 +28,25 @@ const App = () => {
       <EuiFlexGroup gutterSize="m">
         <EuiFlexItem>
           <EuiPanel>
-              <EuiFlexGroup>
-
+            <EuiFlexGroup>
               <EuiFlexItem grow={false}>
-              <AddProductModal
-                currentID={currentID}
-                setCurrentID={setCurrentID}
-              />
-            </EuiFlexItem>
-            <EuiFlexItem grow={true}>
-              <Search />
-
-            </EuiFlexItem>
-            <EuiFlexItem grow={false}>
-            <Filter />
-
-            </EuiFlexItem>
-              </EuiFlexGroup>
-            
-              </EuiPanel>
-            <EuiFlexItem>
+                <AddProductModal
+                  currentID={currentID}
+                  setCurrentID={setCurrentID}
+                />
+              </EuiFlexItem>
+              <EuiFlexItem grow={true}>
+                <Search />
+              </EuiFlexItem>
+              <EuiFlexItem grow={false}>
+                <Filter />
+              </EuiFlexItem>
+            </EuiFlexGroup>
+          </EuiPanel>
+          <EuiFlexItem>
             <EuiSpacer />
-
-            </EuiFlexItem>
-            <Products setCurrentID={setCurrentID} />
+          </EuiFlexItem>
+          <Products setCurrentID={setCurrentID} />
         </EuiFlexItem>
       </EuiFlexGroup>
     </>

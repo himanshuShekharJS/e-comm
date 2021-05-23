@@ -13,24 +13,17 @@ import {
   FILTER_BY_LOW_TO_HIGH,
   FILTER_BY_HIGH_TO_LOW,
   FILTER_BY_RANGE,
-  SEARCH
+  SEARCH,
 } from "./actionTypes";
 
 //making use of redux-thunk
 export const getProducts = () => async (dispatch) => {
   try {
     const response = await api.fetchProducts();
-    console.log(
-      "Inside productAction.js File---->, response from the API after fetching all the product data",
-      response
-    );
     const { data } = response;
     dispatch({ type: FETCH_ALL_PRODUCTS, payload: data });
   } catch (error) {
-    console.log(
-      "Inside productAction.js File---->Error occured for getProducts() ",
-      error.message
-    );
+    console.log(error);
   }
 };
 
@@ -43,10 +36,7 @@ export const addNewProduct = (newProduct) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(
-      "Inside productAction.js File---->Error occured for addNewProduct() ",
-      error
-    );
+    console.log(error);
   }
 };
 
@@ -121,11 +111,11 @@ export const sortByPrice = (category) => async (dispatch) => {
   }
 };
 
-export const filterByRange = (minPrice,maxPrice) => async (dispatch) => {
+export const filterByRange = (minPrice, maxPrice) => async (dispatch) => {
   console.log(minPrice, maxPrice);
   try {
-      const inRangeResponse = await api.filterBetween(minPrice,maxPrice);
-      const {data} = inRangeResponse;
+    const inRangeResponse = await api.filterBetween(minPrice, maxPrice);
+    const { data } = inRangeResponse;
     dispatch({
       type: FILTER_BY_RANGE,
       payload: data,
@@ -134,15 +124,15 @@ export const filterByRange = (minPrice,maxPrice) => async (dispatch) => {
     console.log(error);
   }
 };
-export const searchAmong = (text) =>async(dispatch) =>{
-    try {
-        const response = await api.searchAllProduct(text);
-        const{data} = response;
-        dispatch({
-            type:SEARCH,
-            payload:data
-        })
-    } catch (error) {
-        console.log(error);
-    }
-}
+export const searchAmong = (text) => async (dispatch) => {
+  try {
+    const response = await api.searchAllProduct(text);
+    const { data } = response;
+    dispatch({
+      type: SEARCH,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

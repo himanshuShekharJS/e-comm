@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import{useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import {
   EuiIcon,
   EuiFieldText,
@@ -7,24 +7,20 @@ import {
   EuiSearchBar,
 } from "@elastic/eui";
 import "@elastic/eui/dist/eui_theme_light.css";
-import {searchAmong} from '../actions/productAction.js'
-
-
-
+import { searchAmong } from "../actions/productAction.js";
 
 const Search = () => {
-
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [isClearable, setIsClearable] = useState(true);
   const [value, setValue] = useState("");
   const onChangeHandler = (e) => {
     setValue(e.target.value);
     console.log(value);
   };
-const onSearchHandler = ()=>{
-console.log(value);
-dispatch(searchAmong(value))
-}
+  const onSearchHandler = () => {
+    console.log(value);
+    dispatch(searchAmong(value));
+  };
   return (
     <EuiFieldSearch
       placeholder="Search all Products here. eg iPhone"
@@ -32,7 +28,7 @@ dispatch(searchAmong(value))
       onChange={(e) => onChangeHandler(e)}
       isClearable={isClearable}
       aria-label="Use aria labels when no actual label is in use"
-      onSearch ={onSearchHandler}
+      onSearch={onSearchHandler}
     />
   );
 };

@@ -23,20 +23,16 @@ const Product = ({ setCurrentID }) => {
   const dispatch = useDispatch();
 
   const onEditClickHandler = (id) => {
-    console.log("YOu wanted to edit the Product??");
     console.log(id);
     setCurrentID(id);
-    // setEditProductForm(true);
-    // openCurrentProductDetails(id);
   };
 
   const onDeleteClickHandler = (id) => {
-    console.log("YOu wanted to delete the Product??");
     dispatch(deleteTheProduct(id));
   };
 
   const showProductDescription = (imageSrc, id, title, price) => (
-    <EuiFlexItem key={id} >
+    <EuiFlexItem key={id}>
       <EuiPanel>
         <EuiFlexGrid columns={2}>
           <EuiFlexItem grow={false}>
@@ -90,21 +86,20 @@ const Product = ({ setCurrentID }) => {
   );
   return (
     <>
-        {products?.length > 0 ? (
-          products.map((product) =>
-            showProductDescription(
-              product.selectedFile,
-              product._id,
-              product.title,
-              product.price
-            )
+      {products?.length > 0 ? (
+        products.map((product) =>
+          showProductDescription(
+            product.selectedFile,
+            product._id,
+            product.title,
+            product.price
           )
-        ) : (
-          <EuiText>
-            <h2>No Products Found</h2>
-            </EuiText>
-        )}
-     
+        )
+      ) : (
+        <EuiText>
+          <h2>No Products Found</h2>
+        </EuiText>
+      )}
     </>
   );
 };

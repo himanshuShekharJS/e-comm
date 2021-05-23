@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 export const getAllProducts = async (req, res) => {
   try {
     const products = await productDatabase.find();
-    console.log(products);
     res.status(200).json(products);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -13,7 +12,6 @@ export const getAllProducts = async (req, res) => {
 };
 
 export const addProduct = async (req, res) => {
-  // const {title,price,ratings,category,selectedFiles} = req.body;
   const product = req.body;
 
   const newProduct = new productDatabase(product);
@@ -54,16 +52,13 @@ export const filterProduct = async (req, res) => {
 
     try {
       const sortedProducts = await productDatabase.find().sort({ price: -1 });
-      console.log(sortedProducts);
       res.status(200).json(sortedProducts);
     } catch (error) {
       console.log(error);
     }
   } else if (category === "low_to_high") {
-    console.log("Indise the elseif confiotin----> categoryVAlue", category);
     try {
       const sortedProducts = await productDatabase.find().sort({ price: 1 });
-      console.log(sortedProducts);
       res.status(200).json(sortedProducts);
     } catch (error) {
       console.log(error);
@@ -71,7 +66,6 @@ export const filterProduct = async (req, res) => {
   } else {
     try {
       const products = await productDatabase.find({ categoryValue: category });
-      console.log(products);
       res.status(200).json(products);
     } catch (error) {
       res.status(404).json({ message: error.message });
