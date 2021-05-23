@@ -1,5 +1,5 @@
-import React, { useState, Fragment } from 'react';
-
+import React, { useState, Fragment,useEffect } from 'react';
+import {useSelector} from 'react-redux';
 import {
   EuiButton,
   EuiButtonEmpty,
@@ -15,61 +15,113 @@ import {
   EuiSwitch,
   EuiSuperSelect,
   EuiText,
-  EuiFilePicker
+  EuiFilePicker,EuiOverlayMask
 } from '@elastic/eui';
 import '@elastic/eui/dist/eui_theme_light.css';
-
 import { htmlIdGenerator } from '@elastic/eui/lib/services';
+import FileBase from 'react-file-base64';
+import {useDispatch} from 'react-redux';
+import { addNewProduct,updateTheProduct } from '../actions/productAction';
 
- const AddProductModal = () => {
+
+ const AddProductModal = ({currentID,setCurrentID}) => {
+  
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [categoryValue, setCategoryValue] = useState('mens wear');
-  const [file, setFile] = useState({});
-  const [large, setLarge] = useState(false);
-  const [title,setTitle] = useState('');
-  const [price,setPrice] = useState(400);
   const [minPrice,setMinPrice] = useState(100);
   const [maxPrice,setMaxPrice] = useState(2000);
-  const [stepValue,setStepValue] = useState(50)
+  const [stepValue,setStepValue] = useState(50);
+  const[productUpdate,setProductUpdate] = useState(false)
+  const [productData, setProductData] = useState({
+    title:'',categoryValue:'mens wear',price:400,selectedFile:''
+  })
+  const product = useSelector((state) => currentID ? state.productReducer.find((p)=>p._id===currentID):null);
+  console.log(product);
+  console.log('CurrentID---->',currentID);
 
-
-  
-  const closeModal = () => setIsModalVisible(false);
-
-  const showModal = () => setIsModalVisible(true);
-
-  const onCategoryChangeHandler = (value) => {
-    setCategoryValue(value);
-    if(value === 'mens_wear' || value === "womens_wear"){
+useEffect(()=>{
+  if(product){
+    setProductData({
+      title:product.title,categoryValue:product.categoryValue,price:product.price,selectedFile:product.selectedFile
+    })
+    if(product.categoryValue === 'mens_wear' || product.categoryValue === "womens_wear"){
       setMinPrice(100);
       setMaxPrice(2000);
-      setPrice(maxPrice);
       setStepValue(50);
     }
-    else if(value === 'laptops' ){
+    else if(product.categoryValue === 'laptops' ){
       setMinPrice(15000);
       setMaxPrice(80000);
-      setPrice(maxPrice);
       setStepValue(500);
 
     }
     else{
       setMinPrice(5000);
       setMaxPrice(50000);
-      setPrice(maxPrice);
+      setStepValue(500);
+
+    }
+    setIsModalVisible(true)
+    setProductUpdate(true)
+
+  }
+},[product])
+  
+const dispatch = useDispatch();
+
+  
+  const closeModal = () => {setIsModalVisible(false)
+  setProductData({
+    title:'',categoryValue:'mens wear',price:400,selectedFile:''
+  })};
+
+
+  const onSubmitHandler = (e) =>{
+    e.preventDefault();
+    if(currentID){
+      dispatch(updateTheProduct(currentID,productData))
+    }else {
+      console.log(productData);
+      dispatch(addNewProduct(productData));}
+    setProductData({
+      title:'',categoryValue:'mens wear',price:400,selectedFile:''
+    })
+    closeModal();
+  }
+
+
+  const showModal = () => setIsModalVisible(true);
+
+  const onCategoryChangeHandler = (value) => {
+    // setCategoryValue(value);
+    setProductData({...productData,categoryValue:value})
+    if(value === 'mens_wear' || value === "womens_wear"){
+      setMinPrice(100);
+      setMaxPrice(2000);
+      setStepValue(50);
+    }
+    else if(value === 'laptops' ){
+      setMinPrice(15000);
+      setMaxPrice(80000);
+      setStepValue(500);
+
+    }
+    else{
+      setMinPrice(5000);
+      setMaxPrice(50000);
       setStepValue(500);
 
     }
   };
   const onChangeTitleHandler = (e) =>{
-    setTitle(e.target.value)
+    setProductData({...productData,title:e.target.value})
   }
   const onChangePriceHandler = (e) =>{
-    setPrice(e.target.value)
+    setProductData({...productData,price:e.target.value})
   }
-const onChangeFileHandler =(file) =>{
-  setFile(file)
-}
+// const onChangeFileHandler =(file) =>{
+//   setProductData({...productData,selectedFile:file})
+
+// }
   const categoryOptions = [
     {
       value: 'mens_wear',
@@ -115,7 +167,7 @@ const onChangeFileHandler =(file) =>{
       <EuiFormRow label="Title">
       <EuiFieldText
         placeholder="Product's Title"
-        value={title}
+        value={productData.title}
         onChange={(e) => onChangeTitleHandler(e)}
         aria-label="Use aria labels when no actual label is in use"
       />
@@ -123,7 +175,7 @@ const onChangeFileHandler =(file) =>{
       <EuiFormRow label="Category">
         <EuiSuperSelect
           options={categoryOptions}
-          valueOfSelected={categoryValue}
+          valueOfSelected={productData.categoryValue}
           onChange={(value) => onCategoryChangeHandler(value)}
           itemLayoutAlign="top"
         />
@@ -131,7 +183,7 @@ const onChangeFileHandler =(file) =>{
       <EuiFormRow label="Price" >
       <EuiRange
         id={htmlIdGenerator()()}
-        value={price}
+        value={productData.price}
         onChange={onChangePriceHandler}
         showInput
         min={minPrice}
@@ -143,7 +195,7 @@ const onChangeFileHandler =(file) =>{
       />
       </EuiFormRow>
       <EuiFormRow label="Upload Product Image">
-      <EuiFilePicker
+      {/* <EuiFilePicker
               id={htmlIdGenerator()()}
               initialPromptText="Select or drag and drop an Image of the Product"
               onChange={(file) => {
@@ -151,7 +203,12 @@ const onChangeFileHandler =(file) =>{
               }}
               display={large ? 'large' : 'default'}
               aria-label="Use aria labels when no actual label is in use"
-            />
+            /> */}
+        <FileBase 
+          type='file'
+          multiple={false}
+          onDone={({base64})=>setProductData({...productData,selectedFile:base64})}
+        />
       </EuiFormRow>
     </EuiForm>
   );
@@ -161,30 +218,33 @@ const onChangeFileHandler =(file) =>{
 
   if (isModalVisible) {
     modal = (
-      <EuiModal onClose={closeModal} initialFocus="[name=popswitch]">
+      <EuiOverlayMask>
+      <EuiModal onClose={closeModal} style={{ width: 400 }}>
         <EuiModalHeader>
           <EuiModalHeaderTitle>
-            <h3>Add New Product</h3>
+        {productUpdate ?  <h3>Edit Product</h3>: <h3>Add New Product</h3>}
           </EuiModalHeaderTitle>
         </EuiModalHeader>
 
         <EuiModalBody>{AddProductForm}</EuiModalBody>
 
-        <EuiModalFooter>
+        <EuiModalFooter style={{justifyContent:'center'}}>
           <EuiButtonEmpty onClick={closeModal}>Cancel</EuiButtonEmpty>
 
-          <EuiButton type="submit" form="modalFormId" onClick={closeModal} fill>
-            Save
+          <EuiButton type="submit" form="modalFormId" onClick={onSubmitHandler} fill>
+          {productUpdate ? 'Save' : `Add Product`}
           </EuiButton>
         </EuiModalFooter>
       </EuiModal>
+      </EuiOverlayMask>
     );
   }
+  
   return (
-    <div>
-      <EuiButton onClick={showModal}>Add New Product</EuiButton>
+    <span>
+      <EuiButton  fill size='s' onClick={showModal}>Add New Product</EuiButton>
       {modal}
-    </div>
+    </span>
   );
 };
 

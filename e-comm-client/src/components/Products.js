@@ -1,23 +1,16 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import '@elastic/eui/dist/eui_theme_light.css';
 import {
-    EuiFlexGroup,
-    EuiFlexGrid,
-    EuiFlexItem
+    EuiFlexGroup,EuiFlexItem,EuiFlexGrid
   } from '@elastic/eui';
+import Product from './Product.js'
 
 
-
-const Products = () =>(<Fragment>
+const Products = ({setCurrentID}) =>(<Fragment>
 <EuiFlexGroup>
     <EuiFlexItem>
-        <EuiFlexGrid columns={2}>
-            <EuiFlexItem>Product 1</EuiFlexItem>
-            <EuiFlexItem>Product 1</EuiFlexItem>
-            <EuiFlexItem>Product 1</EuiFlexItem>
-            <EuiFlexItem>Product 1</EuiFlexItem>
-            <EuiFlexItem>Product 1</EuiFlexItem>
-            <EuiFlexItem>Product 1</EuiFlexItem>
+        <EuiFlexGrid columns={3}>
+        <Product setCurrentID={setCurrentID}/>
         </EuiFlexGrid>
     </EuiFlexItem>
 </EuiFlexGroup>
@@ -26,4 +19,9 @@ const Products = () =>(<Fragment>
 </Fragment>);
 
 
+
+
 export default Products;
+
+
+
