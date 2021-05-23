@@ -13,6 +13,7 @@ import AddProductModal from './components/AddProductModal.js';
 import Products from './components/Products.js';
 import {getProducts} from './actions/productAction.js'
 import Filter from './components/Filter.js';
+import Search from './components/Search.js';
 
 
 
@@ -32,6 +33,7 @@ const App = () =>{
                 <EuiPanel>
                 <AddProductModal currentID ={currentID} setCurrentID={setCurrentID} />
                     <Filter />
+                    <Search />
                 <EuiSpacer />
                     <Products setCurrentID={setCurrentID} />
                 </EuiPanel>
