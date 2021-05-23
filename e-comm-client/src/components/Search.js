@@ -15,10 +15,8 @@ const Search = () => {
   const [value, setValue] = useState("");
   const onChangeHandler = (e) => {
     setValue(e.target.value);
-    console.log(value);
   };
   const onSearchHandler = () => {
-    console.log(value);
     dispatch(searchAmong(value));
   };
   return (

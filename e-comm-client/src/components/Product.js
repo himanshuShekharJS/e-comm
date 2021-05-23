@@ -18,8 +18,6 @@ import "@elastic/eui/dist/eui_theme_light.css";
 import { deleteTheProduct } from "../actions/productAction.js";
 const Product = ({ setCurrentID }) => {
   const products = useSelector((state) => state.productReducer); //productReducer is the object storing the value being fetched from the backend and you can find it inside the rootReducer.js file where the state is being managed
-  console.log("Inside Product .js---------->inside product()");
-  console.log("Products fetched from the backend----->", products);
   const dispatch = useDispatch();
 
   const onEditClickHandler = (id) => {
@@ -96,7 +94,7 @@ const Product = ({ setCurrentID }) => {
           )
         )
       ) : (
-        <EuiText>
+        <EuiText textAlign='center'>
           <h2>No Products Found</h2>
         </EuiText>
       )}

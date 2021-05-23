@@ -76,7 +76,7 @@ export const filterBetweenRange = async (req, res) => {
   const { min, max } = req.params;
 
   try {
-    const products = await productDatabase.find({price:{$gte:200,$lte:40000}});
+    const products = await productDatabase.find({price:{$gte:min,$lte:max}});
     res.status(200).json(products);
   } catch (error) {
     console.log(error);
@@ -86,10 +86,11 @@ export const filterBetweenRange = async (req, res) => {
 export const searchDatabase = async (req, res) => {
   const { value } = req.params;
   try {
-    
+    const searchIndex =  productDatabase.createIndex({'title':'text','categoryValue':'text'})
     const responseAfterSearch = await productDatabase.find({
       $text: { $search: value },
     });
+    console.log(responseAfterSearch);
     res.status(200).json(responseAfterSearch);
   } catch (error) {
     console.log(error);

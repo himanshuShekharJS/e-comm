@@ -5,7 +5,7 @@ import Product from "./Product.js";
 
 const Products = ({ setCurrentID }) => (
   <Fragment>
-    <EuiFlexGroup>
+    <EuiFlexGroup style={{padding:'1.5rem'}}>
       <EuiFlexItem>
         <EuiFlexGrid columns={3}>
           <Product setCurrentID={setCurrentID} />
