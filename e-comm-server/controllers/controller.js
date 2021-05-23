@@ -1,8 +1,8 @@
 //all the business logic here
 //importing mongoDatabase here to create and add product
-import productDatabase from '../models/mongoDB.js'
-
-export const getHomePage = async(req,res) =>{
+import productDatabase from '../models/ProductDB.js'
+import mongoose from 'mongoose'
+export const getAllProducts = async(req,res) =>{
    try {
        const products =  await productDatabase.find();
        console.log(products);
@@ -24,4 +24,15 @@ try {
 } catch (error) {
     res.status(409).json({message:error.message})
 }
+}
+export const updateProduct = async(req,res) => {
+
+    const{ id: _id } = req.params;
+    console.log('Inside the updateProduct() in contorller.js--->',req.params);
+    const product = req.body;
+    console.log(req.body);
+    //validating that id belongs to mongoose Object
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No Product Found with that ID');
+    const updatedProduct = await productDatabase.findByIdAndUpdate(_id,product,{new:true})
+    res.json(updatedProduct)
 }
