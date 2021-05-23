@@ -9,6 +9,6 @@ router.patch("/:id",updateProduct);
 router.delete("/:id",deleteProduct);
 router.get('/:category',filterProduct)
 router.get('/sort/:category',filterProduct)
-router.get('/range',filterBetweenRange)
+router.get('/:min/:max',filterBetweenRange)
 router.get('/search/:value',searchDatabase)
 export default router;

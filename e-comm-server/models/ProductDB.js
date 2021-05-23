@@ -9,5 +9,4 @@ const productSchema = mongoose.Schema({
 
 const productDatabase = mongoose.model('productDatabase',productSchema)
 
-
 export default productDatabase;

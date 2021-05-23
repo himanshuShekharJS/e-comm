@@ -40,16 +40,7 @@ const Filter = () => {
 
   const onDualPriceChange = (dualPriceValue) => {
     setDualPriceValue(dualPriceValue);
-    console.log(
-      "Inside Filter.js---->,Current Price choosed for Filtering----->",
-      dualPriceValue
-    );
-    console.log(
-      "Inside Filter.js---->,Current Price Range choosed for Filtering----->",
-      dualPriceValue[0],
-      "------->",
-      dualPriceValue[1]
-    );
+    
   };
   const onFilterOptionChangeHandler = (value) => {
     setFilterOption(value);

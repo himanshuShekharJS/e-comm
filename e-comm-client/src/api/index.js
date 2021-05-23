@@ -8,5 +8,5 @@ export const updateProduct = (id,updatedProduct) => axios.patch(`${url}${id}`,up
 export const deleteProduct = (id) => axios.delete(`${url}${id}`);
 export const filterProduct = (category) => axios.get(`${url}${category}`);
 export const sortProduct = (category) => axios.get(`${url}sort/${category}`);
-export const filterBetween = (minPrice,maxPrice) => axios.get(`${url}range?min=${minPrice}&max=${maxPrice}`);
+export const filterBetween = (minPrice,maxPrice) => axios.get(`${url}${minPrice}/${maxPrice}`);
 export const searchAllProduct = (value) => axios.get(`${url}search/${value}`)

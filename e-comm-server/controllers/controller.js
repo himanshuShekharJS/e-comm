@@ -48,7 +48,6 @@ export const filterProduct = async (req, res) => {
   const { category } = req.params;
   console.log(category);
   if (category === "high_to_low") {
-    console.log("Indise the elseif confiotin----> categoryVAlue", category);
 
     try {
       const sortedProducts = await productDatabase.find().sort({ price: -1 });
@@ -73,14 +72,11 @@ export const filterProduct = async (req, res) => {
   }
 };
 export const filterBetweenRange = async (req, res) => {
-  console.log("inside FIlterBetweenRange", req.query);
-  const { min, max } = req.query;
-  console.log(min, max);
+  
+  const { min, max } = req.params;
+
   try {
-    const products = await productDatabase.find({
-      $and: [{ price: { $gte: min } }, { price: { $lte: max } }],
-    });
-    console.log("Inside FilterBetweenRange--------->", products);
+    const products = await productDatabase.find({price:{$gte:200,$lte:40000}});
     res.status(200).json(products);
   } catch (error) {
     console.log(error);
@@ -90,10 +86,10 @@ export const filterBetweenRange = async (req, res) => {
 export const searchDatabase = async (req, res) => {
   const { value } = req.params;
   try {
+    
     const responseAfterSearch = await productDatabase.find({
       $text: { $search: value },
     });
-    console.log(responseAfterSearch);
     res.status(200).json(responseAfterSearch);
   } catch (error) {
     console.log(error);

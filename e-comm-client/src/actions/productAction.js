@@ -116,6 +116,8 @@ export const filterByRange = (minPrice, maxPrice) => async (dispatch) => {
   try {
     const inRangeResponse = await api.filterBetween(minPrice, maxPrice);
     const { data } = inRangeResponse;
+    console.log(data);
+    console.log(inRangeResponse);
     dispatch({
       type: FILTER_BY_RANGE,
       payload: data,

@@ -46,7 +46,7 @@ const App = () => {
           <EuiFlexItem>
             <EuiSpacer />
           </EuiFlexItem>
-          <Products setCurrentID={setCurrentID} />
+          <Products setCurrentID={setCurrentID} currentID={currentID}/>
         </EuiFlexItem>
       </EuiFlexGroup>
     </>
