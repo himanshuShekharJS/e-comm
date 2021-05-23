@@ -1,4 +1,5 @@
 import React,{Fragment,useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {
     EuiButton,
     EuiButtonEmpty,
@@ -18,18 +19,26 @@ import {
   } from '@elastic/eui';
   import '@elastic/eui/dist/eui_theme_light.css';
 import { htmlIdGenerator } from '@elastic/eui/lib/services';
-
+import {filterBy,sortByPrice,filterByRange} from '../actions/productAction.js'
 
 
   const Filter = () =>{
+    const dispatch = useDispatch();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const[filterOption,setFilterOption] = useState('mens_wear')
     const [dualPriceValue, setDualPriceValue] = useState([100,80000 ]);
     const closeModal = () => setIsModalVisible(false);
     const showModal = () => setIsModalVisible(true);
 
-    const onSubmitHandler = () =>{
-        console.log('You Submitted the Filter form');
+    const onSubmitHandler = (categoryValue) =>{
+        console.log('You Submitted the Filter form',categoryValue);
+        if(categoryValue === 'low_to_high' || categoryValue === 'high_to_low'){
+          dispatch(sortByPrice(categoryValue))
+        }
+        else if(categoryValue === 'range'){
+          dispatch(filterByRange(dualPriceValue[0],dualPriceValue[1]))
+        }
+        dispatch(filterBy(categoryValue));
         setIsModalVisible(false)
     }
     
@@ -152,7 +161,7 @@ import { htmlIdGenerator } from '@elastic/eui/lib/services';
           <EuiModalFooter style={{justifyContent:'center'}}>
             <EuiButtonEmpty onClick={closeModal}>Cancel</EuiButtonEmpty>
   
-            <EuiButton type="submit" form="modalFormId" onClick={onSubmitHandler} fill>
+            <EuiButton type="submit" form="modalFormId" onClick={()=>onSubmitHandler(filterOption)} fill>
              OK
             </EuiButton>
           </EuiModalFooter>
