@@ -10,7 +10,7 @@ const Products = ({setCurrentID}) =>(<Fragment>
 <EuiFlexGroup>
     <EuiFlexItem>
         <EuiFlexGrid columns={3}>
-        <Product setCurrentID={setCurrentID}/>
+        <Product setCurrentID={setCurrentID} style={{height:'15rem'}}/>
         </EuiFlexGrid>
     </EuiFlexItem>
 </EuiFlexGroup>

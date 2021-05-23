@@ -36,18 +36,18 @@ const Product = ({ setCurrentID }) => {
   };
 
   const showProductDescription = (imageSrc, id, title, price) => (
-    <EuiFlexItem key={id}>
+    <EuiFlexItem key={id} >
       <EuiPanel>
         <EuiFlexGrid columns={2}>
           <EuiFlexItem grow={false}>
-            <span style={{ width: "12rem" }}>
+            <div style={{ width: "12rem" }}>
               <EuiImage
                 src={imageSrc}
                 alt="Product Image"
                 margin="s"
                 size="fullWidth"
               />
-            </span>
+            </div>
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
             <EuiFlexItem grow={2}>
@@ -90,7 +90,6 @@ const Product = ({ setCurrentID }) => {
   );
   return (
     <>
-      <EuiFlexGroup>
         {products?.length > 0 ? (
           products.map((product) =>
             showProductDescription(
@@ -105,7 +104,7 @@ const Product = ({ setCurrentID }) => {
             <h2>No Products Found</h2>
             </EuiText>
         )}
-      </EuiFlexGroup>
+     
     </>
   );
 };
