@@ -1,5 +1,5 @@
 import express from 'express'
-import { filterBetweenRange,addProduct, getAllProducts,updateProduct,deleteProduct,filterProduct,searchDatabase } from '../controllers/controller.js';
+import { filterBetweenRange,addProduct, getAllProducts,updateProduct,deleteProduct,filterProduct,getProductsBySearch } from '../controllers/controller.js';
 const router = express.Router();
 
 
@@ -9,6 +9,6 @@ router.patch("/:id",updateProduct);
 router.delete("/:id",deleteProduct);
 router.get('/:category',filterProduct)
 router.get('/sort/:category',filterProduct)
+router.get('/search/:query',getProductsBySearch)
 router.get('/:min/:max',filterBetweenRange)
-router.get('/search/:value',searchDatabase)
 export default router;

@@ -74,7 +74,7 @@ export const filterProduct = async (req, res) => {
 export const filterBetweenRange = async (req, res) => {
   
   const { min, max } = req.params;
-
+console.log("Teri ma akaa");
   try {
     const products = await productDatabase.find({price:{$gte:min,$lte:max}});
     res.status(200).json(products);
@@ -83,14 +83,18 @@ export const filterBetweenRange = async (req, res) => {
   }
 };
 
-export const searchDatabase = async (req, res) => {
-  const { value } = req.params;
+export const getProductsBySearch = async (req, res) => {
+  const { query } = req.params;
+  // redmi
   try {
-    const searchIndex =  productDatabase.createIndex({'title':'text','categoryValue':'text'})
-    const responseAfterSearch = await productDatabase.find({
-      $text: { $search: value },
-    });
+    // const title = new RegExp(value,'i');
+    // const searchIndex =  productDatabase.createIndex({'title':'text','categoryValue':'text'})
+    // const responseAfterSearch = await productDatabase.find({ $text:{ $search: query,$caseSensitive: false} });
+    const responseAfterSearch = await productDatabase.find({ title: {
+      "$regex": query, "$options": "i"
+    } });
     console.log(responseAfterSearch);
+    // const {data }= responseAfterSearch;
     res.status(200).json(responseAfterSearch);
   } catch (error) {
     console.log(error);

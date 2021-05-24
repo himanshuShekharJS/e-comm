@@ -7,17 +7,19 @@ import {
   EuiSearchBar,
 } from "@elastic/eui";
 import "@elastic/eui/dist/eui_theme_light.css";
-import { searchAmong } from "../actions/productAction.js";
 
-const Search = () => {
+const Search = ({onSearchHandler}) => {
   const dispatch = useDispatch();
   const [isClearable, setIsClearable] = useState(true);
   const [value, setValue] = useState("");
   const onChangeHandler = (e) => {
     setValue(e.target.value);
+    if(e.target.value.length===0){
+      onSearchHandler(value)
+    }
   };
-  const onSearchHandler = () => {
-    dispatch(searchAmong(value));
+  const onSearch = () => {
+    onSearchHandler(value);
   };
   return (
     <EuiFieldSearch
@@ -26,7 +28,7 @@ const Search = () => {
       onChange={(e) => onChangeHandler(e)}
       isClearable={isClearable}
       aria-label="Use aria labels when no actual label is in use"
-      onSearch={onSearchHandler}
+      onSearch={onSearch}
     />
   );
 };

@@ -21,7 +21,6 @@ const Product = ({ setCurrentID }) => {
   const dispatch = useDispatch();
 
   const onEditClickHandler = (id) => {
-    console.log(id);
     setCurrentID(id);
   };
 
@@ -64,7 +63,7 @@ const Product = ({ setCurrentID }) => {
                   iconType="pencil"
                   title="Edit"
                   aria-label="Use aria labels when no actual label is in use"
-                  onClick={() => onEditClickHandler(id)}
+                  onClick={() =>  onEditClickHandler(id)}
                 />
               </EuiFlexItem>
               <EuiFlexItem grow={false}>

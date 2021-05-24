@@ -126,11 +126,12 @@ export const filterByRange = (minPrice, maxPrice) => async (dispatch) => {
     console.log(error);
   }
 };
-export const searchAmong = (text) => async (dispatch) => {
+export const getProductsBySearch = (searchQuery) => async (dispatch) => {
   try {
-    const response = await api.searchAllProducts(text);
-    console.log('inside SearchAmong---->',response);
-    const { data } = response;
+    const response = await api.fetchProductsBySearch(searchQuery);
+    console.log('inside getProductsBySearch---->',response);
+    const { data} = response;
+    console.log(data);
     dispatch({
       type: SEARCH,
       payload: data,

@@ -11,17 +11,32 @@ import "@elastic/eui/dist/eui_theme_light.css";
 import { useDispatch } from "react-redux";
 import AddProductModal from "./components/AddProductModal.js";
 import Products from "./components/Products.js";
-import { getProducts } from "./actions/productAction.js";
+import { getProducts,getProductsBySearch } from "./actions/productAction.js";
 import Filter from "./components/Filter.js";
 import Search from "./components/Search.js";
+import{useHistory,useLocation} from 'react-router-dom';
+
+// function useQuery(){
+//   return new URLSearchParams(useLocation().search);
+// }
 
 const App = () => {
   const [currentID, setCurrentID] = useState(null);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
+
+  const onSearchHandler = (value)=>{
+    //search products logiics
+    if(value.trim()){
+      //dispatch some logic to fetch search product
+      dispatch(getProductsBySearch(value))
+    }else{
+      dispatch(getProducts())
+    }
+    
+  }
 
   return (
     <>
@@ -36,7 +51,7 @@ const App = () => {
                 />
               </EuiFlexItem>
               <EuiFlexItem grow={true}>
-                <Search />
+                <Search onSearchHandler ={onSearchHandler}/>
               </EuiFlexItem>
               <EuiFlexItem grow={false}>
                 <Filter />
