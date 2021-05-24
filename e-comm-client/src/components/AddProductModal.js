@@ -79,6 +79,7 @@ const AddProductModal = ({ currentID, setCurrentID }) => {
       price: 400,
       selectedFile: "",
     });
+    setCurrentID(null)
   };
 
   const onSubmitHandler = (e) => {
