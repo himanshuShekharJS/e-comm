@@ -42,7 +42,7 @@ const App = () => {
     <>
       <EuiFlexGroup gutterSize="m">
         <EuiFlexItem>
-          <EuiPanel>
+          <EuiPanel style={{position:'sticky',zIndex:'10000',top:'0'}}>
             <EuiFlexGroup>
               <EuiFlexItem grow={false}>
                 <AddProductModal
