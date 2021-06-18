@@ -74,7 +74,6 @@ export const filterProduct = async (req, res) => {
 export const filterBetweenRange = async (req, res) => {
   
   const { min, max } = req.params;
-console.log("Teri ma akaa");
   try {
     const products = await productDatabase.find({price:{$gte:min,$lte:max}});
     res.status(200).json(products);
